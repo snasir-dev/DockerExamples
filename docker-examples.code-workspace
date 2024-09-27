@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "docker-hello-world"
+		},
+		{
+			"path": "docker-simple-node-app"
+		},
+		{
+			"path": "docker-bootstrap-template"
+		},
+		{
+			"path": "docker-nodejs-express-project"
+		},
+		{
+			"path": "docker-react-vite-project"
+		}
+	],
+	"settings": {}
+}

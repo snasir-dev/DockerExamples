@@ -1,0 +1,14 @@
+VS Codes does not have "Solutions" similar to Visual Studio, instead they call it "Workspaces".
+
+The "docker-simple-examples.code-workspace" file is the solution file, clicking on it will open the solution within VS Code.
+
+-----------
+
+TO OPEN Workspace Settings, do CTRL + SHIFT + P -> Type Open Workspace Settings (JSON). OR "Open Workspace Configuration File"
+
+Add Existing Folder to Workspace
+ - From top action menu. Go to File -> Add Folder to Workspace -> Navigate to the folder you want to add to the workspace in the popup and then press "Add".
+ 
+Add New Folder to Workspace
+Create some folder in windows. Then just use the Add Existing Folder to Workspace setting above to add new folder.
+

@@ -1,0 +1,35 @@
+# Note - Can easily auto create a docker file with the Docker VS Code Official Extension
+# Open Command Pallette (CTRL + SHIFT + P) -> Add DockerFile to workspace -> Node.js -> package.json -> Your port.
+
+
+# Base Image
+# This uses the Node.js 20 image with the Alpine Linux distribution. Alpine is a lightweight Linux distribution, making the resulting Docker image smaller.
+FROM node:20-alpine
+
+# Working Directory
+# Sets the working directory inside the CONTAINER (not the host) where files will be copied and commands will be executed.
+WORKDIR /app
+
+# Copy Package Files
+# Copies the `package.json` and `package-lock.json` files to the working directory. These files contain information about project dependencies.
+# Copy package.json and package-lock.json to the working directory
+# Critical, it is important this is before COPY . . due to how caching and layering
+# works. Docker checks when rebuilding image if any files have changed, if not,
+# will not bother running that command. This will make it so run npm install will
+# not install all dependencies every time, only if package.json file is updated will
+# it rebuild dependencies. Otherwise will just utilize cache layer.
+COPY package*.json ./
+
+# Install Dependencies
+# Installs the project dependencies specified in `package.json`.
+RUN npm install
+
+# Copy Project Code
+# Copies the entire project code from the local directory to the container's working directory.
+COPY . .
+
+# Start the Application
+# Specifies the command that will be executed when the container starts. In this case, it runs the `index.js` file using Node.js.
+CMD ["node", "app.js"]
+# Can also do CMD ["npm", "start"]
+

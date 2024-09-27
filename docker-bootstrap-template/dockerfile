@@ -1,0 +1,36 @@
+# NOTE IF YOU WANTED TO RUN THIS WEBSITE VIA NGINX COULD DO THE FOLLOWING COMMAND VIA BASH TERMINAL:
+# docker run --name nginx-bootstrap-template-example -v "C:\Users\Syed\Documents\Applications\DockerExamples\docker-bootstrap-template\dist:/usr/share/nginx/html:ro" -d -p 9001:80 nginx:latest
+
+FROM nginx:alpine
+
+# CURRENTLY FOR THIS DOCKER FILE IT DOES NOT REALLY SERVE A PURPOSE. HOWEVER, The WORKDIR command in Dockerfiles sets the working directory for the container. Best practice to always set this, as other images that you pull from might already be setting WORKDIR and if you don't specify, it will by default go to the last instace of WORKDIR which might have been set by another image you are pulling from. In this case "nginx".
+WORKDIR /app/docker-template-example 
+
+#
+
+# Destination must be "/usr/share/nginx/html" per instructions from official docker nginx image. This is where it will host the static website.
+COPY ./dist /usr/share/nginx/html
+
+
+
+#FOR THIS EXAMPLE MOSTLY ONLY THE FROM + COPY ARE REQUIRED NOTHING ELSE.
+
+# TO BUILD IMAGE RUN FOLLOWING COMMAND:
+# docker build -t  my-bootstrap-website-image .
+
+# TO CREATE/RUN CONTAINER FROM IMAGE WE JUST BUILT EXECUTE THE FOLLOWING COMMAND:
+# docker run -d -p 9000:80 --name nginx-static-html-website-hosting-example -v /${PWD}/dist:/usr/share/nginx/html my-bootstrap-website-image
+
+# Explaination of above. Need to do "/${PWD}" to prevent the ";C" being added when being mounted. The volume bind mount allows it so that when you make any changes in the /dist folder to index.html etc, and save, immediately if you refresh the localhost it will reflect those changes. Note must be "/${PWD}" and not "/${pwd}" Reference: https://stackoverflow.com/a/50608818
+
+# ----------------------------------------------------
+
+# CMD ["nginx", "-g", "daemon off;"]
+
+# FROM node:20-alpine
+
+# WORKDIR /app
+
+# COPY . .
+
+# CMD  
