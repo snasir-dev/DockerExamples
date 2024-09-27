@@ -1,0 +1,30 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#Avoid personal note files across entire application
+#  "*/Personal_Notes.md" Matches Personal_Notes.md files located exactly one directory deep.
+#  "**/Personal_Notes.md" Matches Personal_Notes.md files located at any level of the directory structure.
+# "**" This pattern will match Personal_Notes.md files at any level in the directory tree, including the root directory.
+**/Personal_Notes.md

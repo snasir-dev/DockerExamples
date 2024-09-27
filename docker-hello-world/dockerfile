@@ -1,0 +1,36 @@
+# Use the official Nginx image with a lightweight Alpine Linux distribution.
+# Alpine is small and helps reduce the overall image size.
+FROM nginx:alpine
+
+# Set the working directory inside the container to /app.
+# This is where future commands like COPY, RUN, or CMD will operate.
+# It's important to explicitly set the WORKDIR to avoid any conflicts from
+# previously set working directories in other layers/images.
+WORKDIR /app
+
+# Copy all files and folders from the current directory (where the Dockerfile is located)
+# to the specified directory in the container: /usr/share/nginx/html.
+# This is where Nginx serves static files by default.
+COPY . /usr/share/nginx/html
+
+# Specify the command to run when the container starts.
+# Only one CMD instruction is allowed per Dockerfile.
+# In this case, Nginx will start automatically as the base image already handles this.
+# No need to explicitly run CMD since Nginx runs by default.
+
+
+# CMD node app.js  
+
+
+# ------------------------
+# 2 Ways to Run this
+
+# 1. Simply execute the docker-compose file "docker-compose up --build -d"
+#    - Recommended to use this method.
+
+# 2. Manually build this Dockerfile and Run the container from it
+#   a. - TO BUILD IMAGE, IN TERMINAL RUN COMMAND:
+#      - docker build -t docker-hello-world-img:1.0 .    
+
+#   b.  - TO CREATE/RUN CONTAINER FROM IMAGE, IN TERMINAL RUN COMMAND:
+#       - docker run --name nginx-docker-hello -v  "C:\Users\Syed\Documents\Applications\DockerExamples\docker-hello-world:/usr/share/nginx/html:ro" -d -p 9000:80 docker-hello-world-img:1.0

@@ -1,0 +1,16 @@
+# IMPORTANT - TO RUN FOLLOWING COMMAND  IN BASH TERMINAL "docker-compose up --build"
+# The version field in the docker-compose.yml file refers to the Docker Compose file format version that Docker defines, not something you can arbitrarily assign. It is used to specify which version of the Compose file syntax your project is using, and Docker Compose supports only specific versions.
+# You cannot just specify any number, such as version: "95256", because Docker Compose would not recognize it. Only a set of predefined versions is supported, and these versions correspond to different capabilities and syntax features that Docker has introduced over time.
+# version: "3.9" # NOT TO BE MISTAKEN BY DOCKER IMAGE TAG VERSION. Versions you can use are "1" (Legacy), "2", "3" (Latest) with subversions like "3.9" (3.9 is the latest version of Docker Compose file format as of now). NOTE THESE ARE OBSOLETE. UNLESS WORKING WITH OLDER DOCKERFILE VERSIONS, LEAVE VERSION BLANK OR DOCKER GIVES A WARNING.
+services:
+  app:
+    build: . # This line means Docker Compose should look for a Dockerfile in the current directory (.) and build the image using the instructions from that file. "." is just the file path to where the DockerFile currently is. In our case, we state it is in the current directory.
+    image: "docker-hello-world-img:1.0" # IF no image is specified, it will auto create image name as "rootdirectoryname-app:latest" with latest tag. Here it would create it as "docker-hello-world-app:latest"
+    volumes:
+      # Mount the current directory (.) into the /app directory in the container.
+      #Note for Applications with /src folder might look something like below
+      # Example: ./src:/app/src   # Mount your local `src` directory to the container's `/app/src` directory
+      - .:/app
+    ports:
+      - "9000:80" # Map the port you need for your app (if necessary). Just for reference. Not necessary for this project. Would be necessary for projects with package.json etc.
+

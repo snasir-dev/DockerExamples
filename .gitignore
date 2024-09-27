@@ -1,0 +1,3 @@
+#/: This indicates that the rule applies to the root of the repository. Without the leading /, the rule would apply to all subdirectories as well.
+# *.txt.bak: This pattern matches any file that ends with the .txt.bak extension.
+/*.txt.bak
