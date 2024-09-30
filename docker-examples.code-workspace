@@ -1,13 +1,16 @@
 {
 	"folders": [
 		{
+			"path": "."
+		},
+		{
 			"path": "docker-hello-world"
 		},
 		{
-			"path": "docker-simple-node-app"
+			"path": "docker-bootstrap-template"
 		},
 		{
-			"path": "docker-bootstrap-template"
+			"path": "docker-simple-node-app"
 		},
 		{
 			"path": "docker-nodejs-express-project"

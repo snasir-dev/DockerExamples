@@ -1,4 +1,5 @@
 # This will get the node image and download it. Alpine is a linux distribution that is very small. Any images with this have a much smaller image file size.
+# Can also use Node.js Long-Term Support (LTS) version: node:lts-alpine 
 FROM node:20-alpine
 
 # This will Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT, or RUN instructions that follow it in the Dockerfile. NOTE THIS IS FOR THE CONTAINER NOT LOCALHOST.
@@ -18,7 +19,7 @@ COPY . .
 CMD node app.js  
 
 
-# ------------------------
+# ------------------------------------
 
 # 1. TO BUILD IMAGE, IN TERMINAL RUN COMMAND:
 #   - docker build -t simple-node-app-img:latest .
@@ -26,8 +27,9 @@ CMD node app.js
 # Note - Check image exists with "docker images" command
 
 # 2. TO CREATE/RUN CONTAINER FROM IMAGE, IN TERMINAL RUN COMMAND:
-#   - docker run --rm --name simple-node-app simple-node-app-img:latest
+#   - docker run --name simple-node-app simple-node-app-img:latest
 
+# Note - add "--rm" right after docker run if you want to automatically remove the container after it finishes running the program.
 
 # Note - Check if container is running with "docker ps" or for stopped containers "docker ps -a".
 
@@ -35,3 +37,10 @@ CMD node app.js
 # Tip - If container already exists, no need to execute the docker run command, instead just start the container and check logs this way
 #   - docker start simple-node-app && docker logs --since 1s -f simple-node-app
 # * Note - docker start does not not automatically show logs so have to run additional command to show logs. adding "-f" shows logs in real time as they are generated *
+
+# ------------------------------------
+# PUBLISH DOCKER IMAGE TO DOCKERHUB 
+# If you want to Upload/Push image to DockerHub Repository, must update Tag and add Docker Account UN
+#   - docker tag simple-node-app-img snasir95/simple-node-app-img
+# Then to push image to DockerHub
+#   - docker push snasir95/simple-node-app-img

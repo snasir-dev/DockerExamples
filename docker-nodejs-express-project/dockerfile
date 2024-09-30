@@ -4,7 +4,10 @@
 
 # Base Image
 # This uses the Node.js 20 image with the Alpine Linux distribution. Alpine is a lightweight Linux distribution, making the resulting Docker image smaller.
-FROM node:20-alpine
+#FROM node:20-alpine
+
+# In general, using an LTS version like (node:lts-alpine) is often the more recommended way for production environments to minimize risks and ensure long-term support. 
+FROM node:lts-alpine
 
 # Working Directory
 # Sets the working directory inside the CONTAINER (not the host) where files will be copied and commands will be executed.
@@ -18,7 +21,7 @@ WORKDIR /app
 # will not bother running that command. This will make it so run npm install will
 # not install all dependencies every time, only if package.json file is updated will
 # it rebuild dependencies. Otherwise will just utilize cache layer.
-COPY package*.json ./
+COPY package*.json .
 
 # Install Dependencies
 # Installs the project dependencies specified in `package.json`.
@@ -33,3 +36,25 @@ COPY . .
 CMD ["node", "app.js"]
 # Can also do CMD ["npm", "start"]
 
+
+# ------------------------------------
+
+# 1. TO BUILD IMAGE, IN TERMINAL RUN COMMAND:
+#   - docker build -t nodejs-express-proj-img:latest .
+
+# Note - Check image exists with "docker images" command
+
+# 2. TO CREATE/RUN CONTAINER FROM IMAGE, IN TERMINAL RUN COMMAND:
+#   - docker run -d --name nodejs-express-proj -p 5000:5000 nodejs-express-proj-img:latest
+
+# ------------------------------------
+# Tip - If container already exists, no need to execute the docker run command, instead just start the container and check logs this way
+#   - docker start nodejs-express-proj && docker logs --since 1s -f nodejs-express-proj
+# * Note - docker start does not not automatically show logs so have to run additional command to show logs. adding "-f" shows logs in real time as they are generated *
+
+# ------------------------------------
+# PUBLISH DOCKER IMAGE TO DOCKERHUB 
+# If you want to Upload/Push image to DockerHub Repository, must update Tag and add Docker Account UN
+#   - docker tag nodejs-express-proj-img snasir95/nodejs-express-proj-img
+# Then to push image to DockerHub
+#   - docker push snasir95/nodejs-express-proj-img

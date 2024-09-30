@@ -2,6 +2,11 @@
 # Alpine is small and helps reduce the overall image size.
 FROM nginx:alpine
 
+# The LABEL instruction in a Dockerfile adds metadata to an image. This metadata is stored as key-value pairs and can provide information about the image, such as the image name, version, author, description, or other relevant details.
+# run command: docker inspect <image-name-or-id>
+# and go to the ""Labels":" key to see all the metadata.
+LABEL Name=docker-hello-world-img Version=1.0 Description="This project is a simple static HTML website hosted in a Docker container using NGINX."
+
 # Set the working directory inside the container to /app.
 # This is where future commands like COPY, RUN, or CMD will operate.
 # It's important to explicitly set the WORKDIR to avoid any conflicts from
@@ -25,8 +30,9 @@ COPY . /usr/share/nginx/html
 # ------------------------
 # 2 Ways to Run this
 
-# 1. Simply execute the docker-compose file "docker-compose up --build -d"
-#    - Recommended to use this method.
+# 1. Simply execute the docker-compose file
+#    - docker-compose up --build -d
+#       - Recommended to use this method.
 
 # 2. Manually build this Dockerfile and Run the container from it
 #   a. - TO BUILD IMAGE, IN TERMINAL RUN COMMAND:
