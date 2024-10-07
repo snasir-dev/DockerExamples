@@ -15,3 +15,12 @@ services:
       NODE_ENV: production
     ports:
       - 5000:5000
+
+
+# ------------------------------------
+
+# IMPORTANT - TO BUILD ALL THE IMAGES AND RUN CONTAINERS - USE FOLLOWING COMMAND IN BASH TERMINAL 
+#   - docker compose up --build -d
+
+# TO STOP ALL CONTAINERS AND REMOVE ALL IMAGES CREATED FROM THIS DOCKER COMPOSE FILE - RUN COMMAND 
+#   - docker compose down
