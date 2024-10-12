@@ -1,0 +1,29 @@
+# Official Documentation on how to setup Mongo Db in Docker File - https://hub.docker.com/_/mongo
+
+services:
+  mongodb:
+    # Pull the Official Mongo Db image from Docker Hub.
+    image: mongo
+    restart: always
+    # The MongoDB server in the image listens on the standard MongoDB port, 27017
+    # ports:
+    #   - 27017:27017
+    #
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      #ME_CONFIG_MONGODB_URL: mongodb://admin:secret@mongo:27017/
+      # Makes it so when you opening the mongo express (frontend) for mongodb, it will no longer prompt for the username and password.
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+      - mongodb

@@ -16,6 +16,9 @@
 			"path": "docker-nodejs-express-project"
 		},
 		{
+			"path": "docker-mongodb-express"
+		},
+		{
 			"path": "docker-react-vite-project"
 		}
 	],
