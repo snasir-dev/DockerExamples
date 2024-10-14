@@ -27,3 +27,11 @@ services:
       ME_CONFIG_BASICAUTH: false
     depends_on:
       - mongodb
+
+# ------------------------------------
+
+# IMPORTANT - TO BUILD ALL THE IMAGES AND RUN CONTAINERS - USE FOLLOWING COMMAND IN BASH TERMINAL
+#   - docker compose up --build -d
+
+# TO STOP ALL CONTAINERS AND REMOVE ALL IMAGES CREATED FROM THIS DOCKER COMPOSE FILE - RUN COMMAND
+#   - docker compose down
