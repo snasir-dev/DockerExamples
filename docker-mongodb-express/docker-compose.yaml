@@ -1,17 +1,32 @@
-# Official Documentation on how to setup Mongo Db in Docker File - https://hub.docker.com/_/mongo
-
+# How to test application. Add or remove any Mongo DB data by accessing http://localhost:8081/
+# accessing http://localhost:3000 will show the value of mongo db with database name 'my-db' with collection name 'my-collection' with record (document) of keyId.
+version: "3"
 services:
+  my-app:
+    build: .
+    # image: docker-hub-user/image-name:image-tag
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      # Variable Syntax - ${}. Variable values are pulled from the .env file. Server.js uses the value from the docker-compose file and not the .env.
+      MONGO_DB_USERNAME: ${MONGO_ADMIN_USER}
+      MONGO_DB_PWD: ${MONGO_ADMIN_PW}
+    # Typically front end depends on backend. Backend Depends on Database.
+
   mongodb:
     # Pull the Official Mongo Db image from Docker Hub.
     image: mongo
     restart: always
-    # The MongoDB server in the image listens on the standard MongoDB port, 27017
-    # ports:
-    #   - 27017:27017
-    #
+    ports:
+      - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: secret
+      # Variable values are pulled from the .env file.
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ADMIN_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADMIN_PW}
+    # This mounts a volume named mongo-data to the container path /data/db, where MongoDB stores its database files. The data will now persist on your host machine, and Docker will not delete it when you bring the containers down.
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data
 
   mongo-express:
     image: mongo-express
@@ -19,14 +34,21 @@ services:
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
-      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
-      ME_CONFIG_MONGODB_SERVER: mongodb
-      #ME_CONFIG_MONGODB_URL: mongodb://admin:secret@mongo:27017/
+      # Variable values are pulled from the .env file.
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ADMIN_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ADMIN_PW}
+      #ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMIN_USER}:${MONGO_ADMIN_PW}@mongodb:27017/
       # Makes it so when you opening the mongo express (frontend) for mongodb, it will no longer prompt for the username and password.
       ME_CONFIG_BASICAUTH: false
     depends_on:
       - mongodb
+
+# Volumes section
+# This defines a named volume called mongo-data. Docker will automatically manage this volume on our local machine and ensure it persists between container restarts.
+# DEBUG TIP - MIGHT NEED TO remove stale volumes - "docker compose down --volumes"
+volumes:
+  mongo-data: # Named volume for MongoDB data
 
 # ------------------------------------
 
