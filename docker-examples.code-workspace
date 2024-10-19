@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "docker-react-vite-project"
+		},
+		{
+			"path": "docker-prometheus-monitoring-setup"
 		}
 	],
 	"settings": {}

@@ -1,0 +1,29 @@
+services:
+  prometheus-node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - 9100:9100
+    networks:
+      - prometheus-demo
+    restart: always
+
+  #prometheus:
+
+
+volumes:
+  test-volume:
+
+networks:
+  prometheus-demo:
+  # default bridge network driver
+    driver: bridge
+
+
+# ------------------------------------
+
+# IMPORTANT - TO BUILD ALL THE IMAGES AND RUN CONTAINERS - USE FOLLOWING COMMAND IN BASH TERMINAL
+#   - docker compose up --build -d
+
+# TO STOP ALL CONTAINERS AND REMOVE ALL IMAGES CREATED FROM THIS DOCKER COMPOSE FILE - RUN COMMAND
+#   - docker compose down
