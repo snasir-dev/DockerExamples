@@ -5,6 +5,7 @@ services:
   my-app:
     build: .
     # image: docker-hub-user/image-name:image-tag
+    # container_name: mongo-frontend-app
     restart: always
     ports:
       - 3000:3000
