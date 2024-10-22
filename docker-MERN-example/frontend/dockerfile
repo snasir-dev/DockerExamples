@@ -24,9 +24,9 @@
 
 # In general, using an LTS version like (node:lts-alpine) is often the more recommended way for production environments to minimize risks and ensure long-term support.
 #ARG NODE_VERSION=lts
-ARG NODE_VERSION=20
+# ARG NODE_VERSION=20
 
-FROM node:${NODE_VERSION}-alpine
+FROM node:20-alpine
 
 # Set environment variables to avoid issues with npm global installs
 #ENV NODE_ENV=production
@@ -55,7 +55,7 @@ COPY package*.json .
 
 # Install Dependencies
 # Installs the project dependencies specified in `package.json`.
-RUN npm install
+RUN npm install --loglevel verbose
 # Install dependencies only for production to reduce image size
 # RUN npm install --only=production
 

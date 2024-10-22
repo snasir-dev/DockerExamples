@@ -55,7 +55,7 @@ COPY package*.json .
 
 # Install Dependencies
 # Installs the project dependencies specified in `package.json`.
-RUN npm install
+RUN npm install  --loglevel verbose
 # Install dependencies only for production to reduce image size
 # RUN npm install --only=production
 
