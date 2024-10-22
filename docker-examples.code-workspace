@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "docker-prometheus-monitoring-setup"
+		},
+		{
+			"path": "docker-MERN-example"
 		}
 	],
 	"settings": {}
