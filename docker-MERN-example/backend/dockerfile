@@ -31,14 +31,6 @@ FROM node:${NODE_VERSION}-alpine
 # Set environment variables to avoid issues with npm global installs
 #ENV NODE_ENV=production
 
-# create a user with permissions to run the app
-# -S -> create a system user
-# -G -> add the user to a group
-# This is done to avoid running the app as root
-# If the app is run as root, any vulnerability in the app can be exploited to gain access to the host system. It's good practice to run the app as a non-root user
-#RUN addgroup -S app && adduser -S app -G app
-#RUN addgroup app && adduser -S -G app app
-
 # Working Directory
 # Sets the working directory inside the CONTAINER (not the host) where files will be copied and commands will be executed.
 WORKDIR /app
@@ -63,52 +55,9 @@ RUN npm install  --loglevel verbose
 # Copies the entire project code from the local directory to the container's working directory.
 COPY . .
 
-# Change ownership of app files to the non-root user
-# chown -R <user>:<group> <directory>
-# chown command changes the user and/or group ownership of for given file.
-#RUN chown -R app:app /app
-
-# Set the user to the non-root user created
-#USER app
-
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Set the environment variable for the app's port
-#ENV PORT 8000
-
 # Start the Application
-# Specifies the command that will be executed when the container starts. In this case, it runs the "npm run dev" command. Ensure that the npm run dev command has the --host command to expose the port. Should like something similar to  "dev": "vite --host",
-# command to run the app
 CMD ["npm", "start"] 
-# Can also write as follows.
-# CMD npm run dev 
-# CMD ["npm", "start"]
 
-
-# ------------------------------------
-
-# 1. TO BUILD IMAGE, IN TERMINAL RUN COMMAND:
-#   - docker build -t docker-react-vite-proj:latest .
-
-# Note - Check image exists with "docker images" command
-
-# 2. TO CREATE/RUN CONTAINER FROM IMAGE, IN TERMINAL RUN COMMAND:
-#  - docker run -d --name docker-react-vite-proj-container -p 5173:5173 docker-react-vite-proj:latest
-
-#  - docker run -d --name docker-react-vite-proj-container -p 5173:5173 -v "C:\Users\Syed\Documents\Applications\DockerExamples\docker-react-vite-project\src:/app/src" -v /app/node_modules docker-react-vite-proj:latest
-
-
-# Explaination of above. Need to do "/${PWD}" to prevent the ";C" being added when being mounted. The volume bind mount allows it so that when you make any changes in the /dist folder to index.html etc, and save, immediately if you refresh the localhost it will reflect those changes. Note must be "/${PWD}" and not "/${pwd}" Reference: https://stackoverflow.com/a/50608818
-
-# ------------------------------------
-# Tip - If container already exists, no need to execute the docker run command, instead just start the container and check logs this way
-#   - docker start nodejs-express-proj && docker logs --since 1s -f nodejs-express-proj
-# * Note - docker start does not not automatically show logs so have to run additional command to show logs. adding "-f" shows logs in real time as they are generated *
-
-# ------------------------------------
-# PUBLISH DOCKER IMAGE TO DOCKERHUB 
-# If you want to Upload/Push image to DockerHub Repository, must update Tag and add Docker Account UN
-#   - docker tag nodejs-express-proj-img snasir95/nodejs-express-proj-img
-# Then to push image to DockerHub
-#   - docker push snasir95/nodejs-express-proj-img

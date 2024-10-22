@@ -78,7 +78,7 @@ EXPOSE 5173
 ENV PORT 5173
 
 # Start the Application
-# Specifies the command that will be executed when the container starts. In this case, it runs the "npm run dev" command. Ensure that the npm run dev command has the --host command to expose the port. Should like something similar to  "dev": "vite --host",
+# # Specifies the command that will be executed when the container starts. In this case, it runs the "npm run dev" command. Ensure that the npm run dev command within package.json has the --host command to expose the port. Should like something similar to  "dev": "vite --host".
 # command to run the app
 CMD ["npm", "run", "dev"] 
 # Can also write as follows.
