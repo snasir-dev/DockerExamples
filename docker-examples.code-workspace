@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "docker-MERN-example"
+		},
+		{
+			"path": "docker-fullstack-NEXTjs"
 		}
 	],
 	"settings": {}
