@@ -1,12 +1,5 @@
-# services:
-#   server:
-#     build:
-#       context: .
-#     environment:
-#       NODE_ENV: production
-#     ports:
-#       - 5173:5173
-
+# Access application on http://localhost:5173. It is a simple TODO application where you can add your tasks.
+# Note - By default Next.js would open on port 3000. We manually added a PORT env variable and updated the port within the next.js package.json script "dev" command.
 version: "3.8"
 
 services:

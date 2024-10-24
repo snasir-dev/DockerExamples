@@ -1,6 +1,6 @@
 # How to test application. Access Prometheus http://localhost:9090/ You should see a UI. Go to Status -> Targets to see all targets or applications that are being scraped. We setup http://localhost:9100/ (node-exporter) container to be the website we will scrape. The instructions for the scraping are specified within the prometheus.yaml file. It hits the http://localhost:9100/metric path to get the metrics and log it. Can also directly go to that url as both containers are running when you run "docker compose up --build -d".
 
-# accessing http://localhost:3000 will show the value of mongo db with database name 'my-db' with collection name 'my-collection' with record (document) of keyId.
+# accessing http://localhost:3000 will allow you to connect to Grafana. Login locally with UN: admin PW: admin (can change pw if necessary). Go to Dashboards to see the metrics of cAdvisor, Node Exporter which provides 
 
 services:
   prometheus:
