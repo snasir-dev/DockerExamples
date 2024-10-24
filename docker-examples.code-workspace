@@ -22,7 +22,7 @@
 			"path": "docker-react-vite-project"
 		},
 		{
-			"path": "docker-prometheus-monitoring-setup"
+			"path": "docker-prometheus-grafana-setup"
 		},
 		{
 			"path": "docker-MERN-example"

@@ -1,4 +1,5 @@
 global:
+  # By default, scrape targets every 15 seconds.
   scrape_interval: 15s
   evaluation_interval: 15s
 
@@ -8,6 +9,19 @@ global:
 
 # Important - this must be at the root level similar to "global".
 scrape_configs:
+  # Scrape prometheus itself.
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: prometheus
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # cadvisor - Monitor Containers - Created by Google.
+  - job_name: cadvisor
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
   - job_name: node_exporter
     metrics_path: "/metrics"
     static_configs:
