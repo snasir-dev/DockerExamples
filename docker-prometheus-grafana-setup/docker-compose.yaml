@@ -1,0 +1,85 @@
+# How to test application. Access Prometheus http://localhost:9090/ You should see a UI. Go to Status -> Targets to see all targets or applications that are being scraped. We setup http://localhost:9100/ (node-exporter) container to be the website we will scrape. The instructions for the scraping are specified within the prometheus.yaml file. It hits the http://localhost:9100/metric path to get the metrics and log it. Can also directly go to that url as both containers are running when you run "docker compose up --build -d".
+
+# accessing http://localhost:3000 will show the value of mongo db with database name 'my-db' with collection name 'my-collection' with record (document) of keyId.
+
+services:
+  prometheus:
+    # Pull Official Prometheus
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      # Mounts the current directory's "prometheus.yml" file to the container's
+      # /etc/prometheus/prometheus.yml path as read-only. Any changes made to
+      # the prometheus.yml file on the host will be reflected in the container.
+      # - ./config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      # Matches the Docker volume "prometheus-data" to the container's
+      # /prometheus directory. This volume will persist Prometheus data,
+      # ensuring data retention across container restarts or removals.
+      - prometheus-data:/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - prometheus-network
+    restart: unless-stopped
+
+  grafana:
+    # Official Grafana Docker Image. Can omit "latest", it is implied. When you go to localhost will ask you to login. Default username: admin Password: admin
+    # Once logged in, click on
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - prometheus-network
+    restart: unless-stopped
+
+  # cAdvisor (Container Advisor) - Maintained by Google - Third-Party Prometheus Exporter - Provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collets, aggregates, processes, and exports information about running containers.
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    # ports:
+    #   - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    networks:
+      - prometheus-network
+
+  # Official Prometheus Exporter. Exporters help export existing metrics from third-party systems as Prometheus metrics.
+  prometheus-node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    command:
+      - "--path.rootfs=/host"
+    ports:
+      - 9100:9100
+    networks:
+      - prometheus-network
+    restart: unless-stopped
+
+volumes:
+  prometheus-data:
+  grafana-data:
+    # Can omit "driver: local" as it is default behavior. If no driver specified it will use local volume driver.
+    driver: local
+
+networks:
+  prometheus-network:
+    # default bridge network driver. Can omit "driver:bridge" as it is default network. Implied.
+    driver: bridge
+# ------------------------------------
+
+# IMPORTANT - TO BUILD ALL THE IMAGES AND RUN CONTAINERS - USE FOLLOWING COMMAND IN BASH TERMINAL
+#   - docker compose up --build -d
+
+# TO STOP ALL CONTAINERS AND REMOVE ALL IMAGES CREATED FROM THIS DOCKER COMPOSE FILE - RUN COMMAND
+#   - docker compose down
