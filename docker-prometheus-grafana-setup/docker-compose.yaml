@@ -1,6 +1,6 @@
 # How to test application. Access Prometheus http://localhost:9090/ You should see a UI. Go to Status -> Targets to see all targets or applications that are being scraped. We setup http://localhost:9100/ (node-exporter) container to be the website we will scrape. The instructions for the scraping are specified within the prometheus.yaml file. It hits the http://localhost:9100/metric path to get the metrics and log it. Can also directly go to that url as both containers are running when you run "docker compose up --build -d".
 
-# accessing http://localhost:3000 will allow you to connect to Grafana. Login locally with UN: admin PW: admin (can change pw if necessary). Go to Dashboards to see the metrics of cAdvisor, Node Exporter which provides 
+# accessing http://localhost:3000 will allow you to connect to Grafana. Login locally with UN: admin PW: admin (can change pw if necessary). Go to Dashboards to see the metrics of cAdvisor, Node Exporter which provides
 
 services:
   prometheus:
@@ -37,6 +37,7 @@ services:
     restart: unless-stopped
 
   # cAdvisor (Container Advisor) - Maintained by Google - Third-Party Prometheus Exporter - Provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collets, aggregates, processes, and exports information about running containers.
+  # THIS EXPORTER MEASURES CONTAINER METRICS. Note - Can use Telegraf to measure both system metrics (Node Exporter) and Container metrics (cAdvisor) as an alternative.
 
   cadvisor:
     image: google/cadvisor:latest
@@ -55,6 +56,7 @@ services:
       - prometheus-network
 
   # Official Prometheus Exporter. Exporters help export existing metrics from third-party systems as Prometheus metrics.
+  # THIS Prometheus EXPORTER MEASURES THE HOST / NODE (k8s) Metrics. Note - Can use Telegraf to measure both system metrics (Node Exporter) and Container metrics (cAdvisor) as an alternative.
   prometheus-node-exporter:
     image: prom/node-exporter
     container_name: node-exporter

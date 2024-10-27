@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+// const PORT = parseInt(process.env.PORT || "5000");
+const PORT = 5000;
 
 // Base URL for the server
-const baseUrl = `http://localhost:${port}`;
+const baseUrl = `http://localhost:${PORT}`;
 
 // Helper function to create a route
 const createRoute = (path, example = "") => ({
@@ -184,9 +185,9 @@ app.get(UserRoutes.allUsers.routePath, (req, res) => {
 	});
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
 	console.log(
-		`Node.js Express simple User API App listening on port ${port}. Open http://localhost:5000/ to see results in the browser. It is highly recommended that JSON Formatter Extension (https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en) or another similar Web extension to easily format JSON data is installed to easily visualize and navigate through the data. `,
+		`Node.js Express simple User API App listening on port ${PORT}. Open http://localhost:5000/ to see results in the browser. It is highly recommended that JSON Formatter Extension (https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en) or another similar Web extension to easily format JSON data is installed to easily visualize and navigate through the data. `,
 	);
 });
 
