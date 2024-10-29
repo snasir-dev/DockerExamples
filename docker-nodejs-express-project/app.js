@@ -29,7 +29,7 @@ const UserRoutes = {
 };
 console.log(UserRoutes);
 
-// Default Route Path. This is what you will see when you open http://localhost:5000/
+// Default Route Path. This is what you will see when you open http://localhost:{PORT}.  Ex: http://localhost:5000/
 app.get(UserRoutes.default.routePath, (req, res) => {
 	// API general information object
 	const apiInfo = {
