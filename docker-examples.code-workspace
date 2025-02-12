@@ -4,6 +4,9 @@
 			"path": "."
 		},
 		{
+			"path": "docker-ai-run-deepseek-r1-locally"
+		},
+		{
 			"path": "docker-hello-world"
 		},
 		{

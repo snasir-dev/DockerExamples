@@ -1,0 +1,33 @@
+# Full instructions on how to run DeepSeek-R1 locally with Docker: https://dev.to/savvasstephnds/run-deepseek-locally-using-docker-2pdm
+
+services:
+  # Make sure to run command "docker compose exec ollama ollama pull deepseek-r1:7b" to pull the model before running the server.
+  ollama-container:
+    # Ollama is a lightweight framework where you can easily run open source frameworks, like Deepseek or Llama, on your computer locally.
+    # Official Website: https://www.ollama.com/
+    image: ollama/ollama
+    # Bind Mount: We will store all models like deepseek1-7b in the .ollama sub-directory within our host root directory at ./ollama-models. Once we are done, we can delete the .ollama directory and all models will be removed. Run command "rm -rf ./ollama-models" to delete the directory.
+    volumes:
+      - ./ollama-models:/root/.ollama
+    ports:
+      - 11434:11434
+
+    # Configure Docker Compose to Utilize the GPU. This should speed up response time. This requires NVIDIA Container Toolkit on host machine.
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu] # Request GPU capability
+
+    # healthcheck:
+    #   test: ["CMD", "sh", "-c", "ollama list"]
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 10
+
+  web-app:
+    image: nginx:1.27.3-alpine
+    volumes:
+      - ./web:/usr/share/nginx/html
+    ports:
+      - "3001:80"
