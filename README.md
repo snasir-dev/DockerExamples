@@ -14,7 +14,7 @@ Before running any of the projects, ensure the following prerequisites are met:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/snasir95/DockerExamples.git
+   git clone https://github.com/snasir-dev/DockerExamples.git
    cd DockerExamples
    ```
 
